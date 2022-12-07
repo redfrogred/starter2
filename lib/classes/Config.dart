@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class Config {
   
-  static const  String  appName                   = "starter1";
-  static const  String  appVersion                = "1.0.b.001";
+  static const  String  appName                   = "starter2";
+  static const  String  appVersion                = "1.0.b.004X";
 
   static        bool    appHasBeenInitialized     = false;
 
@@ -13,12 +13,13 @@ class Config {
   
   static double         deviceWidth               = 0;
   static double         deviceHeight              = 0;
-  static double         scaleModifier             = 0.6;
+  static double         scaleModifier             = 0.6;  //  this is the right value for 
+                                                          //  a modern phone (like my S22)  
 
   static const Color    appBackgroundColor        = Color(0xFFf9feff); // Colors.amber; //  
   static const Color    appBarColor               = Color(0xFF2196f3);
   static const Color    appBarTextColor           = Color(0xFFffffff); // Colors.yellow; // 
-  static const Color    appButtonColor            = Color(0xFF2196f3); // Colors.yellow; //  
+  static const Color    appButtonColor            = Colors.amber; //  Color(0xFF2196f3); // Colors.yellow; //  
   static const Color    appButtonTextColor        = Color(0xFFffffff); // Colors.red; //  
   static const Color    appTextColor              = Color(0xFF000000); // Colors.green; //  
 

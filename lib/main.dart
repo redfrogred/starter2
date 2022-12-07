@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> {
 class HomePage extends StatelessWidget {
 
   void _init( context ) {
-
+    Utils.log('message');
   }
     
   @override

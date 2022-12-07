@@ -12,18 +12,19 @@ class Controller with ChangeNotifier {
       }
       else {
         var query = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
-        double w = query.width;
-        Config.deviceWidth = w;
+        Config.deviceWidth = query.width;
         Config.deviceHeight = query.height;
 
         // if screen is narrow, make scaler smaller
         if ( Config.deviceWidth < 321 ) { Config.scaleModifier = 0.5; } 
         // if screen is wide, make scaler bigger
         if ( Config.deviceWidth > 799 ) { Config.scaleModifier = 1.0; } 
+ 
+        // log the height and width
+        Utils.log('( Controller.dart ) initApp() (1x only, Son!) (size = ${ Config.deviceWidth.toString() }x${ Config.deviceHeight.toString() }) and (Config.scaleModifier = ' + Config.scaleModifier.toString() + ')' );
         
-        
-        Config.appHasBeenInitialized = true;         
-        Utils.log('( Controller.dart ) initApp() (1x only) (size = ${ Config.deviceWidth.toString() }x${ Config.deviceHeight.toString() }) and (Config.scaleModifier = ' + Config.scaleModifier.toString() + ')' );
+        // make sure this init only happens 1x
+        Config.appHasBeenInitialized = true;        
         return;
       }
     }

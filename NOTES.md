@@ -2,8 +2,8 @@
 
 This is where I am at with this project...
 
-LEFT OFF ( version "1.0.a.011" )
-* made VERY extensive changes to hoe colors and font sizes are handled...
+LEFT OFF ( version "1.0.b.001" )
+* made VERY extensive changes to how colors and font sizes are handled...
 
 NEXT
 * safe area?
