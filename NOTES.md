@@ -2,8 +2,11 @@
 
 This is where I am at with this project...
 
-LEFT OFF ( version "1.0.b.001" )
-* made VERY extensive changes to how colors and font sizes are handled...
+LEFT OFF ( version "1.0.c.003" )
+* working on HintPage.dart with new approach
+    + added late variables
+    + making btn()
+    + hoping to use btn() globally (in a button class?) so I can re-use logic 
 
 NEXT
 * safe area?

@@ -34,11 +34,12 @@ class _MyAppState extends State<MyApp> {
 
   // (this page) variables
   static const String _fileName = 'main.dart';
+  /*
   double? _scale14;
   double? _scale24;
   double? _scale32;    
   double? _scale48;   
-
+  */
   // (this page) init and dispose
   @override
   void initState() {
@@ -46,11 +47,14 @@ class _MyAppState extends State<MyApp> {
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
     // init the app
+    /*
     Provider.of<Controller>(context, listen: false).initApp();
+    
     _scale14 = 14*Config.scaleModifier;
     _scale24 = 24*Config.scaleModifier;
     _scale32 = 32*Config.scaleModifier;      
     _scale48 = 48*Config.scaleModifier; 
+    */
   }
 
   @override
@@ -73,8 +77,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'StartPage',
+      initialRoute: 'HintPage',
       routes: {
+        'HintPage': (context) => const HintPage(),
         'StartPage': (context) => const StartPage(),
         'EndPage': (context) => const EndPage(),
         'DebugPage': (context) => const DebugPage(),
@@ -98,58 +103,28 @@ class _MyAppState extends State<MyApp> {
           primaryVariant: Color(0xFF0A0E21),            
         ),
         scaffoldBackgroundColor: Config.appBackgroundColor,                   // from Config.dart    
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Config.appBarColor,                                // from Config.dart  
           // This will control the "back" icon
-          iconTheme: IconThemeData(color: Config.appBarTextColor, size: _scale48 ),         // from Config.dart
+          iconTheme: IconThemeData(color: Config.appBarTextColor ),         // from Config.dart
           // This will control action icon buttons that locates on the right
-          actionsIconTheme: IconThemeData(color: Config.appBarTextColor, size: _scale48 ),  // from Config.dart
+          actionsIconTheme: IconThemeData(color: Config.appBarTextColor ),  // from Config.dart
           centerTitle: true,
           elevation: 0,
           titleTextStyle: TextStyle(
             //fontWeight: FontWeight.bold,
             // fontFamily: 'Allison',
             color: Config.appBarTextColor,                                    // from Config.dart
-            fontSize: _scale32,
           ),
         ),
 
         //  For textmodifiers see: 
         //  https://api.flutter.dev/flutter/material/TextTheme-class.html
         textTheme: TextTheme(
-          bodyText2: TextStyle(color: Config.appTextColor, fontSize: _scale32 ),
-          button: TextStyle( fontSize: _scale32 ),
-          headline6: TextStyle( fontSize: _scale32 ),
+          bodyText2: TextStyle(color: Config.appTextColor ),
         ),          
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            // backgroundColor: MaterialStateProperty.all<Color>(Config.colorButtons),
-            padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return EdgeInsets.fromLTRB( _scale24!, _scale14!, _scale24!, _scale14! );
-                }
-                return EdgeInsets.fromLTRB( _scale24!, _scale14!, _scale24!, _scale14! );
-              },
-            ),                  
-          ),
-        ), 
+ 
       ),
-      home: HomePage(),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-
-  void _init( context ) {
-    Utils.log('message');
-  }
-    
-  @override
-  Widget build(BuildContext context) {
-    _init(context);
-
-    return Container();
   }
 }
