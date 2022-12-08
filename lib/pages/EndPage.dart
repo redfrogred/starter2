@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import '../classes/Config.dart';
 import '../classes/Utils.dart';
 import '../pages/_AllPages.dart';
 import '../widgets/_AllWidgets.dart';
@@ -20,6 +21,7 @@ class _EndPageState extends State<EndPage> {
 
   // (this page) variables
   static const String _fileName = 'EndPage.dart';
+  final double _scale32 = 32*Config.scaleModifier;
 
   // (this page) init and dispose
   @override
@@ -92,7 +94,9 @@ class _EndPageState extends State<EndPage> {
                         MaterialPageRoute(builder: (_) => DebugPage())
                       );  
                   },
-                  child: Text( 'ver ' + Utils.getSimpleVersion() ),  
+                  child: Text(
+                    'ver ' + Utils.getSimpleVersion(), 
+                    style: TextStyle( fontSize: _scale32 ), ),  
                 ),
               ),
             ],

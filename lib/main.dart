@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       //  see:
       //  https://sanjibsinha.com/color-flutter/
       theme: ThemeData(
-        colorScheme: const ColorScheme(
+        colorScheme: ColorScheme(
           primary: Config.appButtonColor,                                     // from Config.dart 
           onPrimary: Config.appButtonTextColor,                               // from Config.dart
           brightness: Brightness.dark,

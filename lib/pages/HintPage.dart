@@ -23,6 +23,7 @@ class _HintPageState extends State<HintPage> {
 
   // (this page) variables
   static const String _fileName = 'HintPage.dart';
+  String _errorStr = '';
   
   // (this page) init and dispose
   @override
@@ -42,9 +43,42 @@ class _HintPageState extends State<HintPage> {
   void _buildTriggered() {
     Utils.log('( $_fileName ) _buildTriggered()');
     Provider.of<Controller>(context, listen: false).initApp( context );
-    setState(() {
-      Config.showHint = true;
-    });
+    if ( Config.deviceWidth > 0 ) {
+      setState(() {
+        Config.showHint = true;
+      });
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        //  as an emergency measure, save the width to storage in
+        //  case it is needed when the app loaded in the future...
+        Provider.of<Controller>(context, listen: false).setStoredValue( 'deviceWidth', Config.deviceWidth.toInt() );
+        Utils.log('( $_fileName ) setStoredValue() used to save Config.deviceWidth...');
+      });     
+    }
+    else {
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        //  as an emergency measure, use storage to grab width
+        //  if possible...
+        int storedWidth = Provider.of<Controller>(context, listen: false).getStoredValue( 'deviceWidth')!;
+        if ( storedWidth > 0) {
+          Utils.log('( $_fileName ) HALLELUJAH!! getStoredValue() was used to load Config.deviceWidth...');
+          // Just like in Controller.initApp, set the Config sizes...
+          Config.deviceWidth = storedWidth.toDouble();
+
+          // if screen is narrow, make scaler smaller
+          if ( Config.deviceWidth < 321 ) { Config.scaleModifier = 0.5; } 
+          // if screen is wide, make scaler bigger
+          if ( Config.deviceWidth > 799 ) { Config.scaleModifier = 1.0; }
+          setState(() {
+            Config.showHint = true;
+          });
+        }
+        else {
+          setState(() {
+            _errorStr = 'ERROR: Config.deviceWidth = 0';
+          });
+        }
+      });     
+    }
   }
   
   void _addPostFrameCallbackTriggered( context ) {
@@ -90,7 +124,16 @@ class _HintPageState extends State<HintPage> {
         ),
       )
       : 
-      Container()
+      GestureDetector(
+        onDoubleTap: () {
+          setState(() {
+            Config.showHint = true;
+          });          
+        },
+        child: Container(
+          child: Center(child:Text( _errorStr ))
+        ),
+      )
     );
   }
 }

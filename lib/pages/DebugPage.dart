@@ -96,13 +96,13 @@ class _DebugPageState extends State<DebugPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           Utils.log('( $_fileName ) (event) clicked "quit"');
-                          Utils.log('( $_fileName ) (quitting in 4 sec...)');
+                          Utils.log('( $_fileName ) (quitting in 5 sec...)');
                           setState(() {
                             _log = Config.log;
                           });                          
                           //  see:
                           //  https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
-                          Future.delayed(const Duration(milliseconds: 4000), () {
+                          Future.delayed(const Duration(milliseconds: 5000), () {
                             SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
                           }); 
                         },
@@ -121,7 +121,7 @@ class _DebugPageState extends State<DebugPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: SingleChildScrollView (
-                      child: Text( _log!, style: TextStyle( fontSize: _scale26  ) ),
+                      child: Text( _log!, style: TextStyle( fontSize: _scale26 ) ),
                     ),
                   ),
                 ),              
