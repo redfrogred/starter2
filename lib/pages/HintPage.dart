@@ -23,24 +23,6 @@ class _HintPageState extends State<HintPage> {
 
   // (this page) variables
   static const String _fileName = 'HintPage.dart';
-  late double _scale24;  
-  late double _scale14;
-  ButtonStyle btn () {
-
-      Utils.log( 'btn() valled ' + _scale24.toString());
-      
-      return ButtonStyle(
-      // backgroundColor: MaterialStateProperty.all<Color>(Config.colorButtons),
-      padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-        (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return EdgeInsets.fromLTRB( _scale24, _scale14, _scale24, _scale14 );
-          }
-          return EdgeInsets.fromLTRB( _scale24, _scale14, _scale24, _scale14 );
-        },
-      )
-    );
-  }
   
   // (this page) init and dispose
   @override
@@ -48,9 +30,6 @@ class _HintPageState extends State<HintPage> {
     super.initState();
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
-    Provider.of<Controller>(context, listen: false).initApp();
-    _scale24 = 24*Config.scaleModifier;  
-    _scale14 = 14*Config.scaleModifier;    
   }
 
   @override
@@ -62,6 +41,10 @@ class _HintPageState extends State<HintPage> {
   // (this page) methods
   void _buildTriggered() {
     Utils.log('( $_fileName ) _buildTriggered()');
+    Provider.of<Controller>(context, listen: false).initApp( context );
+    setState(() {
+      Config.showHint = true;
+    });
   }
   
   void _addPostFrameCallbackTriggered( context ) {
@@ -79,7 +62,11 @@ class _HintPageState extends State<HintPage> {
         Utils.log('( $_fileName ) WillPopScope() triggered');
         return true;    // true allows back button (false denies)
       },
-      child: SafeArea(
+      child: 
+      
+      ( Config. showHint == true ) ?
+
+      SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,  
           appBar: MyAppBarWidget( 'HintPage',),
@@ -89,18 +76,21 @@ class _HintPageState extends State<HintPage> {
             child: Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Utils.log('( $_fileName ) (event) clicked "go to EndPage()"');
+                  Utils.log('( $_fileName ) (event) clicked "go to StartPage()"');
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => EndPage())
+                    MaterialPageRoute(builder: (_) => StartPage())
                   );                
                 },
-                child: Text( 'Go to EndPage()' ),
-                style: btn(),
+                // start of button appearance settings 
+                child: Text( 'Go to StartPage()', style: MyButtonStyle().btnText(), ),
+                style: MyButtonStyle().btnPadding(),
               ),
             ),
           ),
         ),
-      ),
+      )
+      : 
+      Container()
     );
   }
 }

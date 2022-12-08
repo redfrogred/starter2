@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Config {
   
   static const  String  appName                   = "starter2";
-  static const  String  appVersion                = "1.0.c.004";
+  static const  String  appVersion                = "1.0.c.010";
 
   static        bool    appHasBeenInitialized     = false;
 
@@ -19,11 +19,13 @@ class Config {
   static const Color    appBackgroundColor        = Color(0xFFf9feff); // Colors.amber; //  
   static const Color    appBarColor               = Color(0xFF2196f3);
   static const Color    appBarTextColor           = Color(0xFFffffff); // Colors.yellow; // 
-  static const Color    appButtonColor            = Colors.amber; //  Color(0xFF2196f3); // Colors.yellow; //  
+  static const Color    appButtonColor            = Colors.black12; //  Color(0xFF2196f3); // Colors.yellow; //  
   static const Color    appButtonTextColor        = Color(0xFFffffff); // Colors.red; //  
   static const Color    appTextColor              = Color(0xFF000000); // Colors.green; //  
 
   static const Color    appSecondaryColor         = Color(0xFFeeeeee); // Colors.pink; //  
+
+  static bool           showHint                  = false;
 
 
 

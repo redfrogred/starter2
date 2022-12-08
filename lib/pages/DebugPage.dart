@@ -77,7 +77,6 @@ class _DebugPageState extends State<DebugPage> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15,0,10,0),
                       child: ElevatedButton(
-                        child: Text('clear'),
                         onPressed: () {
                           Utils.clearLog();
                           Utils.log('( $_fileName ) (event) clicked "clear"');
@@ -85,6 +84,9 @@ class _DebugPageState extends State<DebugPage> {
                             _log = Config.log;
                           });
                         },
+                        // start of button appearance settings 
+                        child: Text( 'clear', style: MyButtonStyle().btnText(), ),
+                        style: MyButtonStyle().btnPadding(),
                       ),
                     ),  
                   ],

@@ -5,15 +5,15 @@ import '../classes/Utils.dart';
 class Controller with ChangeNotifier {
 
     // initialize the 1x 
-    void initApp() {
+    void initApp( BuildContext context) {
       if ( Config.appHasBeenInitialized == true ) { 
         Utils.log('( Controller.dart ) initApp() (denied because it already happened)');
         return;
       }
       else {
-        var query = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
-        Config.deviceWidth = query.width;
-        Config.deviceHeight = query.height;
+        // var query = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size;
+        Config.deviceWidth = MediaQuery.of(context).size.width; // query.width;
+        Config.deviceHeight = MediaQuery.of(context).size.height; // query.height;
 
         // if screen is narrow, make scaler smaller
         if ( Config.deviceWidth < 321 ) { Config.scaleModifier = 0.5; } 
