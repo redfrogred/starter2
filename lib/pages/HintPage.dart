@@ -1,25 +1,28 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../classes/Config.dart';
 import '../classes/Utils.dart';
 import '../pages/_AllPages.dart';
+import '../providers/Controller.dart';
 import '../widgets/_AllWidgets.dart';
 
-class StartPage extends StatefulWidget {
-  const StartPage({ super.key });
+class HintPage extends StatefulWidget {
+  const HintPage({ super.key });
 
   @override
-  State createState() => _StartPageState();
+  State createState() => _HintPageState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _HintPageState extends State<HintPage> {
 
-  _StartPageState() {
-    Utils.log('<<< ( StartPage.dart ) init >>>', 2, true );
+  _HintPageState() {
+    Utils.log('<<< ( HintPage.dart ) init >>>', 2, true );
   }
 
   // (this page) variables
-  static const String _fileName = 'StartPage.dart';
+  static const String _fileName = 'HintPage.dart';
   
   // (this page) init and dispose
   @override
@@ -38,6 +41,10 @@ class _StartPageState extends State<StartPage> {
   // (this page) methods
   void _buildTriggered() {
     Utils.log('( $_fileName ) _buildTriggered()');
+    Provider.of<Controller>(context, listen: false).initApp( context );
+    setState(() {
+      Config.showHint = true;
+    });
   }
   
   void _addPostFrameCallbackTriggered( context ) {
@@ -55,30 +62,35 @@ class _StartPageState extends State<StartPage> {
         Utils.log('( $_fileName ) WillPopScope() triggered');
         return true;    // true allows back button (false denies)
       },
-      child: SafeArea(
+      child: 
+      
+      ( Config. showHint == true ) ?
+
+      SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,  
-          appBar: MyAppBarWidget( 'StartPAGE',),
+          appBar: MyAppBarWidget( 'HintPage',),
           drawer: DrawerWidget(),
           body: Container(
             color: Colors.transparent,
             child: Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Utils.log('( $_fileName ) (event) clicked "go to EndPage()"');
+                  Utils.log('( $_fileName ) (event) clicked "go to StartPage()"');
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => EndPage())
+                    MaterialPageRoute(builder: (_) => StartPage())
                   );                
                 },
                 // start of button appearance settings 
-                child: Text( 'Go to EndPage()', style: MyButtonStyle().btnText(), ),
+                child: Text( 'Go to StartPage()', style: MyButtonStyle().btnText(), ),
                 style: MyButtonStyle().btnPadding(),
-
               ),
             ),
           ),
         ),
-      ),
+      )
+      : 
+      Container()
     );
   }
 }

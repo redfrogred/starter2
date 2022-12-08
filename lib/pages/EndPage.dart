@@ -74,7 +74,9 @@ class _EndPageState extends State<EndPage> {
                         MaterialPageRoute(builder: (_) => StartPage())
                       );                
                     },
-                    child: Text( 'Go to StartPage()' ),
+                    // start of button appearance settings 
+                    child: Text( 'Go to StartPage()', style: MyButtonStyle().btnText(), ),
+                    style: MyButtonStyle().btnPadding(),
                   ),
                 ),
               ),

@@ -2,10 +2,15 @@
 
 This is where I am at with this project...
 
-LEFT OFF ( version "1.0.a.011" )
-* made VERY extensive changes to hoe colors and font sizes are handled...
+LEFT OFF ( version "1.0.c.014" )
+* added quit
+* added Date class, and timestamp on init load
 
 NEXT
+* NEW APPROACH: Use Storage class!
+    + when size comes up 0.0, see if last size is stored
+    + if it is, use that!
+
 * safe area?
 * see if I can move more styling to main.dart (themeData)
 * add other common classes (storage, date, etc.)

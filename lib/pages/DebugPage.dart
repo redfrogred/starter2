@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../classes/Utils.dart';
 import '../classes/Config.dart';
 import '../widgets/_AllWidgets.dart';
@@ -73,11 +74,11 @@ class _DebugPageState extends State<DebugPage> {
                 height: _scale120,
                 color: Config.appSecondaryColor,
                 child: Row (
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15,0,10,0),
                       child: ElevatedButton(
-                        child: Text('clear'),
                         onPressed: () {
                           Utils.clearLog();
                           Utils.log('( $_fileName ) (event) clicked "clear"');
@@ -85,8 +86,31 @@ class _DebugPageState extends State<DebugPage> {
                             _log = Config.log;
                           });
                         },
+                        // start of button appearance settings 
+                        child: Text( 'clear', style: MyButtonStyle().btnText(), ),
+                        style: MyButtonStyle().btnPadding(),
                       ),
                     ),  
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15,0,15,0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Utils.log('( $_fileName ) (event) clicked "quit"');
+                          Utils.log('( $_fileName ) (quitting in 4 sec...)');
+                          setState(() {
+                            _log = Config.log;
+                          });                          
+                          //  see:
+                          //  https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
+                          Future.delayed(const Duration(milliseconds: 4000), () {
+                            SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
+                          }); 
+                        },
+                        // start of button appearance settings 
+                        child: Text( 'quit', style: MyButtonStyle().btnText(), ),
+                        style: MyButtonStyle().btnPadding(),
+                      ),
+                    ),                     
                   ],
                 ),
               ),
