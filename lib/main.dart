@@ -26,7 +26,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   _MyAppState() {
     Utils.log('<<< ( main.dart ) init version ${ Config.appVersion } >>>', 2, true );
@@ -55,12 +55,44 @@ class _MyAppState extends State<MyApp> {
     _scale32 = 32*Config.scaleModifier;      
     _scale48 = 48*Config.scaleModifier; 
     */
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     Utils.log('( $_fileName ) dispose()');
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) { 
+    super.didChangeAppLifecycleState(state);
+    // Utils.log('<<< didChangeAppLifecycleState() >>>');
+    switch(state) { 
+      case AppLifecycleState.paused: { 
+        Utils.log('<--- AppLifecycleState.paused --->'); 
+        // paused means app moved to background
+      } 
+      break; 
+      case AppLifecycleState.resumed: { 
+        Utils.log('<--- AppLifecycleState.resumed --->');
+        // app moved to foreground (but not if just opened)
+      } 
+      break;       
+      case AppLifecycleState.detached: { 
+        Utils.log('<--- AppLifecycleState.detached --->');
+      } 
+      break; 
+      case AppLifecycleState.inactive: { 
+        Utils.log('<--- AppLifecycleState.inactive --->');
+      } 
+      break;       
+      default: { 
+        Utils.log('<--- AppLifecycleState.(unkown) --->');
+      }
+      break; 
+    }     
+
   }
 
   // (this page) methods
