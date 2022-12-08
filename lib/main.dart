@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './providers/Controller.dart';
 import './classes/Config.dart';
 import './classes/Utils.dart';
+import './classes/Date.dart';
 import './pages/_AllPages.dart';
 
 void main() {
@@ -29,7 +30,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   _MyAppState() {
-    Utils.log('<<< ( main.dart ) init version ${ Config.appVersion } >>>', 2, true );
+    DateTime timestamp = Date.makeTimestampAsDateTime();
+    Utils.log('<<< ( main.dart ) init version ${ Config.appVersion } at ${ Date.getFriendlyTimestamp(timestamp) } >>>', 2, true );
   }
 
   // (this page) variables

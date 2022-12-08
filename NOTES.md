@@ -2,13 +2,15 @@
 
 This is where I am at with this project...
 
-LEFT OFF ( version "1.0.c.003" )
-* working on HintPage.dart with new approach
-    + added late variables
-    + making btn()
-    + hoping to use btn() globally (in a button class?) so I can re-use logic 
+LEFT OFF ( version "1.0.c.014" )
+* added quit
+* added Date class, and timestamp on init load
 
 NEXT
+* NEW APPROACH: Use Storage class!
+    + when size comes up 0.0, see if last size is stored
+    + if it is, use that!
+
 * safe area?
 * see if I can move more styling to main.dart (themeData)
 * add other common classes (storage, date, etc.)

@@ -14,24 +14,17 @@ class MyButtonStyle {
 
   ButtonStyle btnPadding () {
 
-      Utils.log( 'btn() called ' + _scale24.toString());
+      Utils.log( '( $_fileName ) btnPadding() called ' );
       
-      return ButtonStyle(
-      // backgroundColor: MaterialStateProperty.all<Color>(Config.colorButtons),
-      padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-        (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
-            return EdgeInsets.fromLTRB( _scale24, _scale14, _scale24, _scale14 );
-          }
-          return EdgeInsets.fromLTRB( _scale24, _scale14, _scale24, _scale14 );
-        },
-      )
-    );
+      return ElevatedButton.styleFrom(
+        padding: EdgeInsets.fromLTRB( _scale24, _scale14, _scale24, _scale14 ),
+        elevation: 1,
+      );
   }
 
   TextStyle btnText () {
 
-      Utils.log( 'btn() called ' + _scale24.toString());
+      Utils.log( '( $_fileName ) btnText() called ' );
       
       return TextStyle(
       // backgroundColor: MaterialStateProperty.all<Color>(Config.colorButtons),
