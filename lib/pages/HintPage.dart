@@ -62,12 +62,8 @@ class _HintPageState extends State<HintPage> {
         if ( storedWidth > 0) {
           Utils.log('( $_fileName ) HALLELUJAH!! getStoredValue() was used to load Config.deviceWidth...');
           // Just like in Controller.initApp, set the Config sizes...
-          Config.deviceWidth = storedWidth.toDouble();
-
-          // if screen is narrow, make scaler smaller
-          if ( Config.deviceWidth < 321 ) { Config.scaleModifier = 0.5; } 
-          // if screen is wide, make scaler bigger
-          if ( Config.deviceWidth > 799 ) { Config.scaleModifier = 1.0; }
+          double w = storedWidth.toDouble();
+          Provider.of<Controller>(context, listen: false).setDeviceWidth( w );
           setState(() {
             Config.showHint = true;
           });

@@ -43,7 +43,7 @@ class MyAppBarWidget extends StatelessWidget  implements PreferredSizeWidget {
             icon: const Icon( Icons.close, ),
             onPressed: () {
               Navigator.pop(context);
-              Utils.log('( _fileName ) (event) clicked "x"');
+              Utils.log('( $_fileName ) (event) clicked "x"');
             },              
           ),  
         ],  
