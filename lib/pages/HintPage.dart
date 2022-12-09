@@ -47,7 +47,7 @@ class _HintPageState extends State<HintPage> {
       setState(() {
         Config.showHint = true;
       });
-      Future.delayed(const Duration(milliseconds: 2500), () {
+      Future.delayed(const Duration(milliseconds: 1500), () {
         //  as an emergency measure, save the width to storage in
         //  case it is needed when the app loaded in the future...
         Provider.of<Controller>(context, listen: false).setStoredValue( 'deviceWidth', Config.deviceWidth.toInt() );
@@ -55,7 +55,7 @@ class _HintPageState extends State<HintPage> {
       });     
     }
     else {
-      Future.delayed(const Duration(milliseconds: 2500), () {
+      Future.delayed(const Duration(milliseconds: 1500), () {
         //  as an emergency measure, use storage to grab width
         //  if possible...
         int storedWidth = Provider.of<Controller>(context, listen: false).getStoredValue( 'deviceWidth')!;

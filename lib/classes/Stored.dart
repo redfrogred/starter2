@@ -28,9 +28,10 @@ import 'Utils.dart';
 //  if they are not used.  
 
 class Stored {
-
-  static const double _version = 1.04;  // the version of this class last updated October, 2022
-
+  // (this class) variables
+  static const double _version = 1.04;            // the version of this class last updated October, 2022
+  static const String _fileName = 'Stored.dart';
+  static const bool _verbose = false;             // true = show detailed log
   static late SharedPreferences prefs;
 
   // create an associative array for all of the stored 
@@ -47,7 +48,7 @@ class Stored {
   };
 
   Stored() {
-    Utils.log('     [[ Stored() ver ${ _version.toString() } ]] class ("Stored.dart") initialized', 3, false );  
+    Utils.log('( $_fileName ) class initialized (v.${ _version.toString() })');  
     init();
   }
 
@@ -63,7 +64,7 @@ class Stored {
     // "num" is hash map (also known as an associative array).  
     // It maps out "num's" into key/value pairs with a big loop...
     if (num.isNotEmpty) {
-      Utils.log('Stored() num.length =  ' + num.length.toString());  
+      if(_verbose) {  Utils.log('( $_fileName ) num.length =  ' + num.length.toString()); }  
       num.forEach((String key, int value) { 
         if ( prefs.getInt(key) != null ) {
           num[key] = prefs.getInt(key)!;
@@ -73,13 +74,13 @@ class Stored {
       });
     }
     else {
-      Utils.log('Stored() num.length =  0');
+      if(_verbose) {  Utils.log('( $_fileName ) num.length =  0'); }
     }
 
     // now, do STRING
 
     if (str.isNotEmpty) { 
-      Utils.log('Stored() str.length =  ' + str.length.toString());  
+      if(_verbose) { Utils.log('( $_fileName ) str.length =  ' + str.length.toString()); } 
       str.forEach((String key, String value) { 
         if ( prefs.getString(key) != null ) {
           str[key] = prefs.getString(key)!;
@@ -89,7 +90,7 @@ class Stored {
     });
     }
     else {
-      Utils.log('Stored() str.length =  0');
+      if(_verbose) { Utils.log('( $_fileName ) str.length =  0'); }
     }
 
     // ### DO NOT INCLUDE
@@ -104,15 +105,15 @@ class Stored {
   // this checks to see if it is an int or String, and
   // saves the associative array accordingly  
   void setVar ( String k, var v ) {
-    Utils.log('(method) Stored.setVar() $k = $v');
+    if(_verbose) {  Utils.log('( $_fileName ) Stored.setVar() $k = $v'); }
 
     if ( v.runtimeType == String ) {
       prefs.setString(k, v);
-      Utils.log('setString $k = "$v"');
+      if(_verbose) {  Utils.log('( $_fileName ) setString $k = "$v"'); }
     }
     else {
       prefs.setInt(k, v);
-      Utils.log('setInt $k = ${ v.toString() }');
+      if(_verbose) {  Utils.log('( $_fileName ) setInt $k = ${ v.toString() }'); }
     }
     return;
   }
@@ -124,14 +125,14 @@ class Stored {
     c++;
     num[ 'appLoadedTotalNum' ] = c;
     setVar('appLoadedTotalNum', c);
-    Utils.log( 'incrementAppLoaded() | appLoadedTotalNum = ' + num[ 'appLoadedTotalNum' ].toString(), 3, false );  
+    Utils.log( '( $_fileName ) incrementAppLoaded() | appLoadedTotalNum = ' + num[ 'appLoadedTotalNum' ].toString() );  
 
     //  Is this first ever load? 
     //  If so, add some default cookie values...
     if ( num[ 'appLoadedTotalNum' ]! == 1 ) {
       num[ 'deviceWidth' ] = 0;
       setVar('deviceWidth', 0);
-      Utils.log( 'incrementAppLoaded() first time ever so init some cookies...', 3, false );        
+      Utils.log( '( $_fileName ) incrementAppLoaded() first time ever so init some cookies...');        
     }
   }  
 

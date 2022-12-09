@@ -5,8 +5,13 @@ import '../classes/Utils.dart';
 
 class Controller with ChangeNotifier {
 
+  // (this class) variables
+  static const double _version = 1.01;              // the version of this class last updated October, 2022
+  static const String _fileName = 'Controller.dart';
+  static const bool   _verbose = false;             // true = show detailed log
+
   Controller () {
-    Utils.log('( Controller.dart ) Controller() class initialized');
+    Utils.log('( $_fileName ) class initialized (v.${ _version.toString() })'); 
   }
 
   // grab the needed helper classes
@@ -56,18 +61,19 @@ class Controller with ChangeNotifier {
 
 
   int? getStoredValue( String key ) {
+    Utils.log('( $_fileName ) getStoredValue()');
     return stored.num[ key ];
   }
 
   void setStoredValue( String key, int num ) {
-    Utils.log('(method) Controller.setStoredValue()');
+    Utils.log('( $_fileName ) setStoredValue()');
     stored.setVar(key, num);
     stored.num[ key ] = num;
     notifyListeners();
   }
 
   void factoryReset() {
-    Utils.log('(method) Controller.factoryReset()');
+    Utils.log('( $_fileName ) factoryReset()');
     stored.num.forEach((String key, int value) { 
       stored.setVar(key, 0);
       stored.num[ key ] = 0;
