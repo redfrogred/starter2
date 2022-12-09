@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../classes/Utils.dart';
 import '../classes/Config.dart';
+import '../providers/Controller.dart';
 import '../widgets/_AllWidgets.dart';
 
 class DebugPage extends StatefulWidget {
@@ -95,6 +97,21 @@ class _DebugPageState extends State<DebugPage> {
                       padding: const EdgeInsets.fromLTRB(15,0,15,0),
                       child: ElevatedButton(
                         onPressed: () {
+                          Utils.log('( $_fileName ) (event) clicked "reset"');
+                          Provider.of<Controller>(context, listen: false).factoryReset();
+                          setState(() {
+                            _log = Config.log;
+                          });                          
+                        },
+                        // start of button appearance settings 
+                        child: Text( 'reset', style: MyButtonStyle().btnText(), ),
+                        style: MyButtonStyle().btnPadding(),
+                      ),
+                    ),                        
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15,0,15,0),
+                      child: ElevatedButton(
+                        onPressed: () {
                           Utils.log('( $_fileName ) (event) clicked "quit"');
                           Utils.log('( $_fileName ) (quitting in 5 sec...)');
                           setState(() {
@@ -121,6 +138,7 @@ class _DebugPageState extends State<DebugPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: SingleChildScrollView (
+                      scrollDirection: Axis.vertical,
                       child: Text( _log!, style: TextStyle( fontSize: _scale26 ) ),
                     ),
                   ),
