@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import './providers/Controller.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import './classes/Config.dart';
 import './classes/Utils.dart';
 import './classes/Date.dart';
 import './pages/_AllPages.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // prevent turning phone (landscape not allowed, Son!)
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(MultiProvider(
       providers: [
@@ -18,6 +20,10 @@ void main() {
       child: const MyApp(),
     ));
   });
+  // hmm
+  Future.delayed(const Duration(milliseconds: 1000), () {
+    FlutterNativeSplash.remove();
+  });     
 }
 
 class MyApp extends StatefulWidget {
