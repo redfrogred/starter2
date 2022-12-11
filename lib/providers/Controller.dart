@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_conditional_assignment, file_names
+
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:starter2/classes/Date.dart';
 import '../classes/Config.dart';
 import '../classes/Stored.dart';
 import '../classes/Utils.dart';
@@ -16,6 +20,18 @@ class Controller with ChangeNotifier {
 
   // grab the needed helper classes
   Stored stored = Stored();  
+
+  // use local storage as if it is a cookie!
+  final cookie = GetStorage();
+  static int            _appLoadedTotalNum = 0; 
+  static int            _deviceWidth = 0;
+  static int            _deviceHeight = 0;
+  static int            _dateUsedConsecutive = 0;
+  static String         _dateUsedFirst = '';
+  static String         _dateUsedToday = '';
+
+  // get timestamp right now
+  final DateTime _timestamp = Date.makeTimestampAsDateTime();
 
     // initialize the 1x 
     void initApp( BuildContext context) {
@@ -56,7 +72,36 @@ class Controller with ChangeNotifier {
       if ( Config.deviceWidth > 799 ) { Config.scaleModifier = 1.0; } 
     }
 
+    void initStorage() {
 
+      // get the today as "2022-12-25"  
+      _dateUsedToday = Date.getFriendlyDate( _timestamp );
+
+      // read the cookie      
+      if ( cookie.read('appLoadedTotalNum') == null ) {
+        // *** THIS IS THE FIRST TIME THIS APP HAS EVER RUN! ***
+        _appLoadedTotalNum = 1;  
+        // set the dateUsedFirst and dateUsedToday both to today!
+        cookie.write( 'dateUsedFirst', _dateUsedToday );
+        cookie.write( 'dateUsedToday', _dateUsedToday );
+      }
+      else {
+        // *** THIS APP HAS RUN BEFORE! ***
+        _appLoadedTotalNum = cookie.read('appLoadedTotalNum');
+        _appLoadedTotalNum++;
+        // *** LEFT OFF HERE
+      }
+
+      // do some storage operations
+      _dateUsedConsecutive++;
+
+      // write the cookie
+      cookie.write('appLoadedTotalNum',_appLoadedTotalNum);
+
+
+      Utils.log('( $_fileName ) initStorage() | _appLoadedTotalNum = ${ _appLoadedTotalNum.toString() }' );
+
+    }
 
   // =================
   // STORED STUFF
@@ -106,6 +151,6 @@ class Controller with ChangeNotifier {
     return;
   }
 
-
-
 }
+
+

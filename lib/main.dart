@@ -7,11 +7,13 @@ import './classes/Config.dart';
 import './classes/Utils.dart';
 import './classes/Date.dart';
 import './pages/_AllPages.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // prevent turning phone (landscape not allowed, Son!)
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await GetStorage.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(MultiProvider(
       providers: [
@@ -54,6 +56,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
+    Provider.of<Controller>(context, listen: false).initStorage();
     // init the app
     /*
     Provider.of<Controller>(context, listen: false).initApp();
