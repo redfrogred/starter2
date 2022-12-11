@@ -23,6 +23,7 @@ class _HintPageState extends State<HintPage> {
 
   // (this page) variables
   static const String _fileName = 'HintPage.dart';
+  bool _showHint = false;
   String _errorStr = '';
   
   // (this page) init and dispose
@@ -31,6 +32,10 @@ class _HintPageState extends State<HintPage> {
     super.initState();
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
+    setState(() {
+      // if "all systems go", it means the hint can be sent...
+      _showHint = Provider.of<Controller>(context, listen: false).getAllSystemsGo();
+    });
   }
 
   @override
@@ -42,46 +47,12 @@ class _HintPageState extends State<HintPage> {
   // (this page) methods
   void _buildTriggered() {
     Utils.log('( $_fileName ) _buildTriggered()');
-    Provider.of<Controller>(context, listen: false).initApp( context );
-    if ( Config.deviceWidth > 0 ) {
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        //  as an emergency measure, save the width to storage in
-        //  case it is needed when the app loaded in the future...
-        Provider.of<Controller>(context, listen: false).setStoredValue( 'deviceWidth', Config.deviceWidth.toInt() );
-        Utils.log('( $_fileName ) setStoredValue() used to save Config.deviceWidth...');
-      });   
-      _revealHint();  
-    }
-    else {
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        //  as an emergency measure, use storage to grab width
-        //  if possible...
-        int storedWidth = Provider.of<Controller>(context, listen: false).getStoredValue( 'deviceWidth')!;
-        if ( storedWidth > 0) {
-          Utils.log('( $_fileName ) HALLELUJAH!! getStoredValue() was used to load Config.deviceWidth...');
-          // Just like in Controller.initApp, set the Config sizes...
-          double w = storedWidth.toDouble();
-          Provider.of<Controller>(context, listen: false).setDeviceWidth( w );
-          _revealHint();
-        }
-        else {
-          setState(() {
-            _errorStr = 'ERROR: Config.deviceWidth = 0';
-          });
-        }
-      });     
-    }
   }
   
   void _addPostFrameCallbackTriggered( context ) {
     Utils.log('( $_fileName ) _addPostFrameCallbackTriggered()');
   }
 
-  void _revealHint() {
-    setState(() {
-      Config.showHint = true;
-    });    
-  }
 
   // (this page) build
   @override
@@ -96,7 +67,7 @@ class _HintPageState extends State<HintPage> {
       },
       child: 
       
-      ( Config. showHint == true ) ?
+      ( _showHint == true ) ?
 
       SafeArea(
         child: Scaffold(

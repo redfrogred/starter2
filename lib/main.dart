@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
-    Provider.of<Controller>(context, listen: false).initStorage();
+    Provider.of<Controller>(context, listen: false).initApp();
     // init the app
     /*
     Provider.of<Controller>(context, listen: false).initApp();
