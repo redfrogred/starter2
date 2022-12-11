@@ -39,12 +39,14 @@ class Stored {
   Map<String, int> num = {
     'appLoadedTotalNum'           : 0,
     'deviceWidth'                 : 0,
+    'dateUsedConsecutive'         : 0,
   };
 
   // create an associative array for all of the stored 
   // integers... if there are no values, use: Map<String, String> str = {}
   Map<String, String> str = {
-    'appLastPlayedDate'           : ''
+    'dateUsedFirst'               : '',     // "2022-12-25"
+    'dateUsedLast'                : '',     // "2022-12-25"
   };
 
   Stored() {

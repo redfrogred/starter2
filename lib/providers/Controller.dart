@@ -75,12 +75,33 @@ class Controller with ChangeNotifier {
     notifyListeners();
   }
 
+  void getStoredValues() {
+    String str = '( $_fileName ) getStoredValues()\n---- num ----\n';
+    
+    // do numbers
+    stored.num.forEach((String key, int value) { 
+      str += '---- $key: ${ value.toString() }\n';
+    });   
+
+    // now do strings
+    str += '---- str ---- \n';
+    stored.str.forEach((String key, String value) { 
+      str += '---- $key: "${ value.toString() }"\n';
+    });     
+    Utils.log( str ); 
+    return;
+  }
+
   void factoryReset() {
     Utils.log('( $_fileName ) factoryReset()');
     stored.num.forEach((String key, int value) { 
       stored.setVar(key, 0);
       stored.num[ key ] = 0;
     });
+    stored.str.forEach((String key, String value) { 
+      stored.setVar(key, '');
+      stored.str[ key ] = '';
+    });    
     notifyListeners();
     return;
   }
