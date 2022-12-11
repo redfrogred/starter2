@@ -97,6 +97,21 @@ class _DebugPageState extends State<DebugPage> {
                       padding: const EdgeInsets.fromLTRB(15,0,15,0),
                       child: ElevatedButton(
                         onPressed: () {
+                          Utils.log('( $_fileName ) (event) clicked "stats"');
+                          Provider.of<Controller>(context, listen: false).getStoredValues();
+                          setState(() {
+                            _log = Config.log;
+                          });                          
+                        },
+                        // start of button appearance settings 
+                        child: Text( 'stats', style: MyButtonStyle().btnText(), ),
+                        style: MyButtonStyle().btnPadding(),
+                      ),
+                    ),   
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15,0,15,0),
+                      child: ElevatedButton(
+                        onPressed: () {
                           Utils.log('( $_fileName ) (event) clicked "reset"');
                           Provider.of<Controller>(context, listen: false).factoryReset();
                           setState(() {
@@ -107,19 +122,19 @@ class _DebugPageState extends State<DebugPage> {
                         child: Text( 'reset', style: MyButtonStyle().btnText(), ),
                         style: MyButtonStyle().btnPadding(),
                       ),
-                    ),                        
+                    ),                                                 
                     Padding(
                       padding: const EdgeInsets.fromLTRB(15,0,15,0),
                       child: ElevatedButton(
                         onPressed: () {
                           Utils.log('( $_fileName ) (event) clicked "quit"');
-                          Utils.log('( $_fileName ) (quitting in 5 sec...)');
+                          Utils.log('( $_fileName ) (quitting in 1 sec...)');
                           setState(() {
                             _log = Config.log;
                           });                          
                           //  see:
                           //  https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app
-                          Future.delayed(const Duration(milliseconds: 5000), () {
+                          Future.delayed(const Duration(milliseconds: 1500), () {
                             SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
                           }); 
                         },
