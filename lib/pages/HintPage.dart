@@ -44,18 +44,16 @@ class _HintPageState extends State<HintPage> {
     Utils.log('( $_fileName ) _buildTriggered()');
     Provider.of<Controller>(context, listen: false).initApp( context );
     if ( Config.deviceWidth > 0 ) {
-      setState(() {
-        Config.showHint = true;
-      });
-      Future.delayed(const Duration(milliseconds: 1500), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         //  as an emergency measure, save the width to storage in
         //  case it is needed when the app loaded in the future...
         Provider.of<Controller>(context, listen: false).setStoredValue( 'deviceWidth', Config.deviceWidth.toInt() );
         Utils.log('( $_fileName ) setStoredValue() used to save Config.deviceWidth...');
-      });     
+      });   
+      _revealHint();  
     }
     else {
-      Future.delayed(const Duration(milliseconds: 1500), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         //  as an emergency measure, use storage to grab width
         //  if possible...
         int storedWidth = Provider.of<Controller>(context, listen: false).getStoredValue( 'deviceWidth')!;
@@ -64,9 +62,7 @@ class _HintPageState extends State<HintPage> {
           // Just like in Controller.initApp, set the Config sizes...
           double w = storedWidth.toDouble();
           Provider.of<Controller>(context, listen: false).setDeviceWidth( w );
-          setState(() {
-            Config.showHint = true;
-          });
+          _revealHint();
         }
         else {
           setState(() {
@@ -79,6 +75,12 @@ class _HintPageState extends State<HintPage> {
   
   void _addPostFrameCallbackTriggered( context ) {
     Utils.log('( $_fileName ) _addPostFrameCallbackTriggered()');
+  }
+
+  void _revealHint() {
+    setState(() {
+      Config.showHint = true;
+    });    
   }
 
   // (this page) build
