@@ -7,20 +7,19 @@ import './classes/Config.dart';
 import './classes/Utils.dart';
 import './classes/Date.dart';
 import './pages/_AllPages.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // prevent turning phone (landscape not allowed, Son!)
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
+  await GetStorage.init();
     runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Controller()),
       ],
       child: const MyApp(),
     ));
-  });
-  // hmm
   Future.delayed(const Duration(milliseconds: 1000), () {
     FlutterNativeSplash.remove();
   });     
@@ -54,6 +53,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     Utils.log('( $_fileName ) initState()');
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
+    Provider.of<Controller>(context, listen: false).initApp();
     // init the app
     /*
     Provider.of<Controller>(context, listen: false).initApp();
@@ -115,6 +115,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // (this page) build  
   @override
   Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: 'HintPage',
