@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Config {
   
   static const  String  appName                   = "starter2";
-  static const  String  appVersion                = "1.0.d.004";
+  static const  String  appVersion                = "1.0.e.002";
 
   static        bool    appHasBeenInitialized     = false;
 

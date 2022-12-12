@@ -43,6 +43,9 @@ class Controller with ChangeNotifier {
         _appLoadedTotalNum = 1;  
         // set the dateUsedFirst to today!
         cookie.write( 'dateUsedFirst', Date.getFriendlyDate( _timestamp ));
+        cookie.write( 'dateUsedToday', Date.getFriendlyDate( _timestamp ));
+        cookie.write( 'daysUsedConsecutive', 0);
+        cookie.write( 'daysSinceLastUse', 0);
       }
       else {
         // *** THIS APP HAS RUN BEFORE! ***
@@ -64,10 +67,15 @@ class Controller with ChangeNotifier {
       if ( cookie.read('dateUsedToday') == null ) {
         _dateUsedToday = Date.getFriendlyDate( _timestamp );
         cookie.write('dateUsedToday',_dateUsedToday);
+        if ( cookie.read('_daysUsedConsecutive') == null ) {
+          _daysUsedConsecutive = 0;
+          cookie.write('daysUsedConsecutive',_daysUsedConsecutive);
+          _daysSinceLastUse = 0;
+          cookie.write('daysSinceLastUse',_daysSinceLastUse);
+        }        
       } 
       else {
         _dateUsedToday = cookie.read('dateUsedToday');
-
         // the stored _dateUsedToday is older than today
         if ( _dateUsedToday != Date.getFriendlyDate( _timestamp ) ) {
           _daysSinceLastUse = Date.getTimeApart( DateTime.parse(_dateUsedToday), _timestamp );
@@ -82,8 +90,6 @@ class Controller with ChangeNotifier {
           }
           cookie.write('daysUsedConsecutive',_daysUsedConsecutive);
         }
-        //  the stored _dateUsedToday *IS* today, so nothing else needs to happen
-        //  because _dateUsedToday is already saved...
       }
 
       // FETCH DEVICE SIZE (1st from device, if no joy, use cookie...)
@@ -113,6 +119,14 @@ class Controller with ChangeNotifier {
 
     void setDeviceWidth ( double width, double height ) {
       Utils.log('( $_fileName ) setDeviceWidth() to ' + width.toString() );
+      
+      //  just in case this device is being held in landscape mode,
+      //  force scaling that should work for all devices...
+      if( width > height ) {
+        width = 320;
+        height = 480;
+      }
+
       Config.deviceWidth = width;
       // if screen is narrow, make scaler smaller
       if ( Config.deviceWidth < 321 ) { Config.scaleModifier = 0.5; } 
@@ -147,8 +161,8 @@ class Controller with ChangeNotifier {
     str += '---- deviceWidth: ${ cookie.read('deviceWidth') }\n';
     str += '---- deviceHeight: ${ cookie.read('deviceHeight') }\n';
     str += '---- daysUsedConsecutive: ${ cookie.read('daysUsedConsecutive') }\n';
-    str += '---- dateUsedFirst: ${ cookie.read('dateUsedFirst') }\n';
-    str += '---- dateUsedToday: ${ cookie.read('dateUsedToday') }\n';
+    str += '---- dateUsedFirst: "${ cookie.read('dateUsedFirst') }"\n';
+    str += '---- dateUsedToday: "${ cookie.read('dateUsedToday') }"\n';
     str += '---- daysSinceLastUse: ${ cookie.read('daysSinceLastUse') }\n';
     Utils.log( str ); 
     
@@ -156,18 +170,9 @@ class Controller with ChangeNotifier {
   }
 
   void factoryReset() {
-    /*
+
     Utils.log('( $_fileName ) factoryReset()');
-    stored.num.forEach((String key, int value) { 
-      stored.setVar(key, 0);
-      stored.num[ key ] = 0;
-    });
-    stored.str.forEach((String key, String value) { 
-      stored.setVar(key, '');
-      stored.str[ key ] = '';
-    });    
-    notifyListeners();
-    */
+    cookie.erase();
     return;
   }
 

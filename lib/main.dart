@@ -14,15 +14,12 @@ void main() async {
   // prevent turning phone (landscape not allowed, Son!)
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await GetStorage.init();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Controller()),
       ],
       child: const MyApp(),
     ));
-  });
-  // hmm
   Future.delayed(const Duration(milliseconds: 1000), () {
     FlutterNativeSplash.remove();
   });     
@@ -118,6 +115,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // (this page) build  
   @override
   Widget build(BuildContext context) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: 'HintPage',
